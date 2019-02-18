@@ -72,6 +72,9 @@ Optional keyword arguments:
    * takes a Boolean
    * If False, after being clicked the button will return back to the inactive color scheme
    * If True, after being clicked the button will retain the active color scheme, even after the mouse leaves the button area until the      button is clicked again.
+* command = 
+   * Takes a method or function to be called when the button is clicked
+     
 
 ## Example
 
@@ -86,13 +89,13 @@ Optional keyword arguments:
                                  active_color = ["#D46A6A", "#AA3939"],
                                  active_foreground="#C7EFE3",
                                  font=("Arial", 20),
-                                 command = self.clicked,
                                  text="Button",
                                  image=ImageTk.PhotoImage(Image.open("python.png")),
                                  compound="top",
                                  stay_active=True,
+                                 command = self.clicked,
             )
-            #self.button.pack(fill=None, expand=False)
+            self.button.pack(fill=None, expand=False)
 
         def clicked(self, *event):
             print("Clicked")
