@@ -1,6 +1,6 @@
 ## Requirements
 * Windows, Mac or Linux
-* Python 2.7 or 3.x with tkinter + ttk (default for Windows but not for Linux) 
+* Python 2.7 or 3.x with tkinter
 * Pillow module (required if you want to put an image on the button)
 * colour module (required for gradient colours)
 
