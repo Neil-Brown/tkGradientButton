@@ -60,6 +60,7 @@ class Button(tk.Canvas):
         self.leave()
 
     def enter(self):
+        """ Configure buttons appearance when the cursor hovers over it """
         self.configure(cursor=self.active_cursor)
         self.delete("all")
         if hasattr(self, "active_gradient"):
@@ -69,6 +70,7 @@ class Button(tk.Canvas):
         self.set_contents(self.active_foreground)
 
     def leave(self):
+        """ Configure button's appearance when the cursor leaves the button area """
         if self.active and self.stay_active:
             return
         self.configure(cursor=self.inactive_cursor)
@@ -80,6 +82,7 @@ class Button(tk.Canvas):
         self.set_contents(self.inactive_foreground)
 
     def draw_lines(self, grad, num):
+        """ Draws the gradient lines """
         self.lines = []
         for y, color in enumerate(grad):
             self.lines.append(self.create_line((0, y * (self.height / num)),
@@ -87,6 +90,7 @@ class Button(tk.Canvas):
                              width=self.height / num + 7, fill=color))
 
     def set_contents(self, color):
+        """ Set the position of any text or image parameters passed in """
         anchor="n"
         if hasattr(self, "image"):
             img_height = self.image.height()
@@ -116,17 +120,22 @@ class Button(tk.Canvas):
 
 
     def set_img(self, coord, anchor="n"):
+        """ Called if an image parameter is passed """
         self.create_image(coord, image=self.image, anchor=anchor)
 
     def set_txt(self, coord, color, anchor="n"):
+        """ Called if a text parameter is passed """
         self.text_widget = self.create_text(coord, text=self.text, font=self.font, fill=color, anchor=anchor)
 
     def bind_button(self):
+        """ Set button bindings """
         self.bind("<Enter>", lambda event: self.enter())
         self.bind("<Leave>", lambda event: self.leave())
         self.bind("<Button-1>", lambda event: self.click())
 
     def click(self):
+        """ Calls the command passed in as parameter 
+            Flips self.value boolean value """
         self.active = not self.active
         self.enter()
         if hasattr(self, "command"):
