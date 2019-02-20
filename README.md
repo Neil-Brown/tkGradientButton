@@ -1,5 +1,3 @@
-<iframe src="https://giphy.com/embed/pjmd29lTKhUMooxJkD" width="480" height="252" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pjmd29lTKhUMooxJkD">via GIPHY</a></p>
-
 ## Requirements
 * Windows, Mac or Linux
 * Python 2.7 or 3.x with tkinter
