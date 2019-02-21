@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Neil-Brown/tkGradientButton.svg?branch=master)](https://travis-ci.org/Neil-Brown/tkGradientButton)
+[![Build Status](https://travis-ci.org/Neil-Brown/tkGradientButton.svg?branch=master)](https://travis-ci.org/Neil-Brown/tkGradientButton)[![Coverage Status](https://coveralls.io/repos/github/Neil-Brown/tkGradientButton/badge.svg?branch=master)](https://coveralls.io/github/Neil-Brown/tkGradientButton?branch=master)
 ## Requirements
 * Windows, Mac or Linux
 * Python 2.7 or 3.x with tkinter
