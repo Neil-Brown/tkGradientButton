@@ -4,8 +4,6 @@ python:
   - "3.7"
 cache: pip
 install:
-  - pip install pytest
-  - pip install pytest-cov
   - pip install coveralls
 script:
   - python test_gradient_button.py
