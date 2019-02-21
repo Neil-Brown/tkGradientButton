@@ -1,4 +1,5 @@
 colour
-coveralls[yaml]
 pyaml
+coveralls[yaml]
+
 
