@@ -5,7 +5,7 @@ python:
   - "3.5"
   - "3.7"
 - sudo python -m easy_install pyyaml
-coverage run --source=tkGradientButton test_gradient_button.py test
+coverage run --source=test test_gradient_button.py
 after_success:
   - coveralls
 
