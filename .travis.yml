@@ -4,4 +4,6 @@ python:
   - "3.7"
 cache: pip
 script:
-  - python test_gradient_button.py
+  - py.test coveralls/test_gradient_button.py --doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
+after_success:
+  - coveralls
