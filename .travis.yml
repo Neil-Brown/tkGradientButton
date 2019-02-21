@@ -5,3 +5,5 @@ python:
 cache: pip
 script:
   - python test_gradient_button.py
+after_success:
+  - coveralls
