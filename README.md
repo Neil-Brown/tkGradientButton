@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Neil-Brown/tkGradientButton.svg?branch=master)](https://travis-ci.org/Neil-Brown/tkGradientButton)
 ## Requirements
 * Windows, Mac or Linux
 * Python 2.7 or 3.x with tkinter
