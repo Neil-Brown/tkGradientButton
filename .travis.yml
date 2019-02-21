@@ -3,6 +3,7 @@ language: python
 python:
   - "3.5"
   - "3.7"
+- sudo python -m easy_install pyyaml
 coverage run --source=python test_gradient_button.py
 after_success:
   - coveralls
