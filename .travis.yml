@@ -4,6 +4,6 @@ python:
 install:
   - pip install coveralls
 script:
-  - test test_gradient_button.py
+  - gradient_button.py
 after_success:
   - coveralls
