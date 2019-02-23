@@ -1,10 +1,9 @@
 dist: xenial
 language: python
 python:
-  - "2.7"
-  - "3.5"
   - "3.7"
-- sudo python -m easy_install pyyaml
-script: test test_gradient_button.py
+cache: pip
+script:
+  - python test_gradient_button.py
 after_success:
   - coveralls
