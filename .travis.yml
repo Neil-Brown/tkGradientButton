@@ -1,9 +1,13 @@
-dist: xenial
 language: python
 python:
+  - "3.6"
   - "3.7"
-cache: pip
+install:
+  - pip install python-coveralls
+  - pip install coverage
+  - pip install nose
 script:
-  - python test_gradient_button.py
+  - python setup.py install
+  - nosetests --with-coverage 
 after_success:
   - coveralls
