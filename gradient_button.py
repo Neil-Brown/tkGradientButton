@@ -17,7 +17,6 @@ class Button(tk.Canvas):
                          "inactive_foreground": "#550000",
                          "inactive_num_colors": 50,
                          "inactive_cursor": "hand2",
-                         "text": "",
                          "compound": "right",
                          "ipadx": 50,
                          "ipady": 20,
@@ -31,33 +30,58 @@ class Button(tk.Canvas):
 
         self.height = 0
         self.width = 0
+        self.img_height = 0
+        self.img_width = 0
+        self.text_height = 0
+        self.text_width = 0
         self.active = False
         self.lines = []
+
+        # If more than one color is passed in create a gradient
+        if isinstance(self.inactive_color, list):
+            self.inactive_gradient = list(
+                Color(self.inactive_color[0]).range_to(
+                    Color(self.inactive_color[1]), self.inactive_num_colors))
+        if isinstance(self.active_color, list):
+            self.active_gradient = list(Color(self.active_color[0]).range_to(
+                Color(self.active_color[1]), self.active_num_colors))
 
         # Create a font object
         self.font = font.Font(family=self.font[0], size=self.font[1])
 
-        # If more than one color is passed in create a gradient
-        if isinstance(self.inactive_color, list):
-            self.inactive_gradient = list(Color(self.inactive_color[0]).range_to(Color(self.inactive_color[1]), self.inactive_num_colors))
-        if isinstance(self.active_color, list):
-            self.active_gradient = list(Color(self.active_color[0]).range_to(Color(self.active_color[1]), self.active_num_colors))
+        # Measure contents
+        self.measure_image()
+        self.measure_text()
+        self.calculate_dimensions()
 
-        # Calculate button size by text and image dimensions
-        if hasattr(self, "text"):
-            self.width = self.font.measure(self.text)
-            self.height += self.font.metrics("linespace")
-        if hasattr(self, "image"):
-            if self.compound in ["top", "bottom"]:
-                self.height += self.image.height()
-            elif self.compound in ["left", "right"]:
-                self.width += self.image.width()
-
-        self.width += self.ipadx
-        self.height += self.ipady
         self.config(width=self.width, height=self.height)
         self.bind_button()
         self.leave()
+
+    def measure_image(self):
+        """ Set image_width and image_heigh parameters"""
+        if hasattr(self, "image"):
+            self.img_height = self.image.height()
+            self.img_width = self.image.width()
+
+    def measure_text(self):
+        """ Set the text_height text_width attributes """
+        if hasattr(self, "text"):
+            self.text_height = self.font.metrics("linespace")
+            self.text_width = self.font.measure(self.text)
+
+    def calculate_dimensions(self):
+        """ Calculate the button dimensions based on
+            size, compound, and ipad values"""
+
+        if self.compound in ["top", "bottom"]:
+            self.width += max(self.text_width, self.img_width)
+            self.height += (self.text_height + self.img_height)
+        elif self.compound in ["left", "right"]:
+            self.height += max(self.text_height, self.img_height)
+            self.width += (self.text_width + self.img_width)
+        self.width += self.ipadx
+        self.height += self.ipady
 
     def enter(self):
         """ Configure buttons appearance when the cursor hovers over it """
@@ -92,32 +116,27 @@ class Button(tk.Canvas):
     def set_contents(self, color):
         """ Set the position of any text or image parameters passed in """
         anchor="n"
-        if hasattr(self, "image"):
-            img_height = self.image.height()
-            img_width = self.image.width()
-        else:
-            img_height = 0
-            img_width=0
         if self.compound == "top":
             img_coord = (int(self.width/2), int(self.ipady/2))
-            txt_coord = (int(self.width/2), int(self.ipady/2)+img_height)
+            txt_coord = (int(self.width/2), int(self.ipady/2)+self.img_height)
         elif self.compound == "bottom":
             txt_coord = (int(self.width/2), int(self.ipady/2))
             img_coord = (int(self.width/2), int(self.ipady/2) + self.font.metrics("linespace"))
         elif self.compound == "left":
             anchor="w"
             img_coord = (int(self.ipadx/2), int(self.height/2))
-            txt_coord = (int(self.ipadx / 2) + img_width+10, int(self.height / 2))
+            txt_coord = (int(self.ipadx / 2) + +self.img_width+10,
+                         int(self.height  / 2))
         elif self.compound == "right":
             anchor="w"
             txt_coord = (int(self.ipadx/2), int(self.height/2))
-            img_coord = (int(self.ipadx / 2) + self.font.measure(self.text)+10, int(self.height / 2))
+            img_coord = (int(self.ipadx / 2) + self.text_width,
+                         int(self.height / 2))
 
         if hasattr(self, "text"):
             self.set_txt(txt_coord, color, anchor)
         if hasattr(self, "image"):
             self.set_img(img_coord, anchor)
-
 
     def set_img(self, coord, anchor="n"):
         """ Called if an image parameter is passed """

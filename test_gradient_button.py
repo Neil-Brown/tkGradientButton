@@ -1,3 +1,6 @@
+from PIL import Image, ImageTk
+import tkinter as tk
+from tkinter import font
 from unittest import TestCase
 
 from gradient_button import Button
@@ -12,6 +15,8 @@ class TestButton_Static_Colors(TestCase):
                         active_foreground ="blue",
                         inactive_foreground="green",
                         text="test")
+    def tearDown(self):
+        self.b.destroy()
 
     def test_enter_cursor(self):
         self.b.enter()
@@ -56,6 +61,59 @@ class TestButton_Static_Colors(TestCase):
         self.b.click()
         self.b.leave()
         self.assertEqual(self.b.cget("background"), "blue")
+
+class TestSize(TestCase):
+    def setUp(self):
+        self.root = tk.Tk()
+        self.image = ImageTk.PhotoImage(Image.open("example_image.png"))
+
+    def test_has_image_compound_vertical(self):
+        for comp in ["top", "bottom"]:
+            b = Button(image=self.image, compound=comp)
+            b.pack()
+            self.assertEqual(b.height, self.image.height() + b.defaults["ipady"])
+            self.assertEqual(b.width, self.image.width() + b.defaults["ipadx"])
+
+    def test_has_image_and_text_compound_vertical(self):
+        for comp in ["top", "bottom"]:
+            b = Button(image=self.image, text="Testing", compound=comp)
+            b.pack()
+
+            # Width should be the biggest out of text and image + ipadx
+            w = max(b.img_width, b.text_width)
+
+            self.assertEqual(b.height, self.image.height() +
+                             b.font.metrics("linespace") +
+                             b.defaults["ipady"])
+            self.assertEqual(b.width, w + b.defaults["ipadx"])
+
+    def test_has_image_compound_horizontal(self):
+        for comp in ["left", "right"]:
+            b = Button(image=self.image, compound=comp)
+            b.pack()
+
+            # Height should be the biggest out of text and image + ipady
+            h = max(b.img_height, b.text_height)
+
+            self.assertEqual(b.height, h + b.defaults["ipady"])
+            self.assertEqual(b.width, self.image.width() + b.defaults["ipadx"])
+
+    def test_has_image_and_text_compound_horizontal(self):
+        for comp in ["left", "right"]:
+            b = Button(image=self.image, text="Testing", compound=comp)
+            b.pack()
+            # Height should be the biggest out of text and image + ipady
+            h = max(b.img_height, b.text_height)
+
+            self.assertEqual(b.height, h + b.defaults["ipady"])
+            self.assertEqual(b.width, self.image.width() + b.font.measure(
+                b.text) + b.defaults["ipadx"])
+
+    def test_measure_image(self):
+        b = Button(image=self.image)
+        before_height = 0
+        b.measure_image()
+        self.assertNotEqual(before_height, b.height)
 
 
 class TestButton_Gradient_colors(TestCase):
