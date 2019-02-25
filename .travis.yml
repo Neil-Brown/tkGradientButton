@@ -11,6 +11,7 @@ install:
   - pip install coverage
   - pip install nose
   - pip install colour
+  - pip install PIL
 script:
   - python test_gradient_button.py
   - nosetests --with-coverage 
