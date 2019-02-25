@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Neil-Brown/tkGradientButton.svg?branch=master)](https://travis-ci.org/Neil-Brown/tkGradientButton)[![Coverage Status](https://coveralls.io/repos/github/Neil-Brown/tkGradientButton/badge.svg?branch=master)](https://coveralls.io/github/Neil-Brown/tkGradientButton?branch=master)[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![](button1.gif)
 ## Requirements
 * Windows, Mac or Linux
 * Python 2.7 or 3.x with tkinter
